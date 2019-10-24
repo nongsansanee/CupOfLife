@@ -19,31 +19,114 @@ const members = [
     
 // Array.prototype.filter()
 // 1. แสดงเฉพาะสมาชิกที่เกิดในยุค 80
+let dexTap = members.filter(function(person){
+        if(person.birth >= 2523 && person.birth <= 2532){
+            return true;
+        }
+});
+console.table(dexTap);
 
 // Array.prototype.map()
 // 2. สร้าง array ที่มี item เป็น string แสดงชื่อและอายุของแต่สมาชิกละคน
-
+const now = new Date();
+let membersLabel= members.map(function(person){
+    // return person.name+" age:" + (now.getFullYear()-(person.birth - 543));
+    return `${person.name}" age:"${(now.getFullYear()-(person.birth - 543))}`;
+});
+console.table(membersLabel);
 // Array.prototype.sort()
 // 3. เรียงลำดับสมาชิกตามปีเกิดจากเกินก่อนเป็นต้นไป
+// let elders = members.sort(function(member,next){   example1
+//     if(member.birth < next.birth){
+//         return -1;
+//     }
+//      else{
+//          return 1;
+//      }
+// });
+let elders = members.sort((member,next)=>(member.birth < next.birth) ? -1:1);
+console.table(elders);
 
 // Array.prototype.reduce()
 // 4. แสดงผลรวมอายุงานของสมาชิกแต่ละคนเป็นปี
+// let manYears = members.reduce(function(sum,member){   //EX1
+//     return sum += (now.getFullYear() - member.join + 543)
+   
+// },0);
+
+let manYears = members.reduce((sum,member)=>sum += (now.getFullYear() - member.join + 543),0);
+console.log(manYears)
 
 // 5. เรียงลำดับสมาชิกตามอายุงานจากอายุงานน้อยไปมาก
+let orderManYears = members.sort(function(member,next){
+    if(member.join > next.join){
+         return -1;
+    }
+    //  else{
+    //      return 1;
+    //  }
+
+});
+console.table(orderManYears);
 
 // 6. ให้หาว่าจังหวัดไหนในประเทศไทยมีคำว่า 'รี' บ้าง
 // https://th.wikipedia.org/wiki/%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%AD%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%A3%E0%B8%A2%E0%B9%88%E0%B8%AD%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B9%83%E0%B8%99%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B9%84%E0%B8%97%E0%B8%A2
+let provinces=["กระบี่", "กรุงเทพมหานคร", "กาญจนบุรี", "กาฬสินธุ์", "กำแพงเพชร", "ขอนแก่น", "จันทบุรี", "ฉะเชิงเทรา", "ชลบุรี", "ชัยนาท", "ชัยภูมิ", "ชุมพร", "เชียงราย", "เชียงใหม่", "ตรัง", "ตราด", "ตาก", "นครนายก", "นครปฐม", "นครพนม", "นครราชสีมา", "นครศรีธรรมราช", "นครสวรรค์", "นนทบุรี", "นราธิวาส", "น่าน", "บึงกาฬ", "บุรีรัมย์", "ปทุมธานี", "ประจวบคีรีขันธ์", "ปราจีนบุรี", "ปัตตานี", "พะเยา", "พระนครศรีอยุธยา", "พังงา", "พัทลุง", "พิจิตร", "พิษณุโลก", "เพชรบุรี", "เพชรบูรณ์", "แพร่", "ภูเก็ต", "มหาสารคาม", "มุกดาหาร", "แม่ฮ่องสอน", "ยโสธร", "ยะลา", "ร้อยเอ็ด", "ระนอง", "ระยอง", "ราชบุรี", "ลพบุรี", "ลำปาง", "ลำพูน", "เลย", "ศรีสะเกษ", "สกลนคร", "สงขลา", "สตูล", "สมุทรปราการ", "สมุทรสงคราม", "สมุทรสาคร", "สระแก้ว", "สระบุรี", "สิงห์บุรี", "สุโขทัย", "สุพรรณบุรี", "สุราษฎร์ธานี", "สุรินทร์", "หนองคาย", "หนองบัวลำภู", "อ่างทอง", "อำนาจเจริญ", "อุดรธานี", "อุตรดิตถ์", "อุทัยธานี", "อุบลราชธานี"];
 
+let provincesRee = provinces.filter(function(name){
+            return (name.indexOf("รี")!== -1) && !(name.indexOf("ศรี")!== -1);
+});
+
+console.table(provincesRee);
 
 // 7. sort Exercise
 // เรียงลำดับเทพจากฝ่ายสารสนเทศด้วยนามสกุล จากน้อยไปมาก
 // https://www.si.mahidol.ac.th/siit/staff.asp?br=2
+let godsNames=["นายวิโรจน์ กาญจนพัฒนเมธา", "นางสาวอรวรรณ เพ็ชรวงศ์", "นายกนก เอมรุจิ", "นางสาวกุลภาภร น้อยโนนทอง", "นางสาวจิตวรี ฤกษ์เวียง", "นายชาตรี เลิศมณี", "นายนพดล ทิพย์เดโช", "นางเยาวมาลย์ สินธุประเสริฐ", "นายเลอพงศ์ แก้วอินทร์", "นางสาวสุวพรรณ ตันสกุล", "นายอรรถพล คงรัตน์อาภรณ์", "นางสาวนุศรา อินหนู", "นางสาวกนกกาญจน์ พงศ์ศรีเอี่ยม", "นางสาวกาญจนา งามวงศ์", "นางสาวกิ่งกาญจน์ กันยิ่ง", "ว่าที่ร้อยตรีญ นันท์นภัส จินดา", "นางสาวฐิตาภรณ์ กำเหนิดรัตน์", "นางสาวนิศา สุดถ้อย", "นางสาวปรียาภรณ์ สุขงาม", "นางสาวปวีณ์กร วิมลพันธุ์", "นางสาวรพี มณีงาม", "นางสาวรัตนา ปัดถา", "นางสาววิภาวี รื่นจิตต์", "นางสาวศิริรัตน์ ชัยวร", "นางสาวสิทธี สามกองงาม", "นางสาวอภิชญา เปลี่ยนวิจารณ์", "นางสาวอัจฉรา กิจเดช", "นายกิตติศักดิ์ แก้วบุตรดี", "นางสาวพิมพา ตั้งจิตติพร", "นายเสรี เจริญไทย", "นายประทุม นวลมิ่ง", "นายกัญณภัทร มังส์คละแสน", "นายกิตติณัฏฐ์ วันดี", "นางสาวดวงพร พรหมรัศมี", "นายธนพัทธ์ วัชรงค์", "นายธำรงค์ศักดิ์ ปาจรียานนท์", "นางสาวนิภาพรรณ อินธิเดช", "นายพิจิตร รอดพยันตร์", "นายยุรนันท์ ทักษิโณรส", "นางสาววริสสรา หิรัญสถิต", "นางสาววิไลลักษณ์ อมรมนเทียร", "นายศิษฏพล หิรัญศิริ", "นายสรรชัย ฉายโชติเจริญ", "นางสาวสุรางค์ พรหมศร", "นางสาวหทัยรัตน์ เรืองสุวรรณ"];
+// let [fname,lname]=godsNames.split(" ");
+
+let orderGods = godsNames.sort(function(name,next){
+   // console.log(name);
+    let Lname=name.split(" ");
+    let LnameNext=next.split(" ");
+
+
+    // console.log(Lname[0]);
+    // console.log(Lname[1]);
+    // console.log(LnameNext[1]);
+
+    if(Lname[1] < LnameNext[1]){
+        return -1;
+    }
+     else{
+         return 1;
+     }
+       
+
+})
+console.table(orderGods);
+
 
 // 8. Reduce Exercise
 // นับว่าแต่ละภาษาปรากฏใน data กี่ครั้ง
 const data = [
     "PHP", "PHP", "JAVA", "JAVA", "SQL", "C#", "PHP", "JAVASCRIPT", "SQL", "C#", "PHP", "JAVASCRIPT", "PHP", "JAVA" 
 ];
+
+
+var initialValue = {}
+var reducer = function(tally, vote) {
+  if (!tally[vote]) {
+    tally[vote] = 1;
+  } else {
+    tally[vote] = tally[vote] + 1;
+  }
+  return tally;
+}
+var result = data.reduce(reducer, initialValue)
+
+console.table(result);
+
 </script>
 </body>
 </html>
